@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="刘成铭">
+<title>点击排行 - 刘成铭</title>
+<!-- ============================================================
+     刘成铭 学号后三位 607
+     课堂测试：新闻“点击排行 / 评论排行”列表 1:1 还原
+     命名约定：所有 CSS 类名、id、JS 变量均以 lcm_ 开头
+     ============================================================ -->
+<style>
+  /* 刘成铭 | 基础重置与页面底色 */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    background: #ffffff;
+    font-family: "SimSun", "宋体", "Songti SC", serif;
+  }
+
+  .lcm_page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 34px 20px 36px;
+  }
+
+  .lcm_widget {
+    width: 600px;
+    max-width: 100%;
+    background: #ffffff;
+  }
+
+  /* 刘成铭 | 顶部两个排行标签 */
+  .lcm_tabs {
+    display: flex;
+    gap: 8px;
+    height: 60px;
+  }
+
+  .lcm_tab {
+    width: 296px;
+    height: 60px;
+    border: 0;
+    background: #d9eafe;
+    border-bottom: 2px solid #a5d1f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-size: 26px;
+    font-weight: 400;
+    color: #333333;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .lcm_tabActive {
+    background: #ffffff;
+    border: 2px solid #a5d1f4;
+    border-bottom: 0;
+    font-weight: 700;
+  }
+
+  .lcm_tab:focus-visible {
+    outline: 2px solid #5e8fd1;
+    outline-offset: -2px;
+  }
+
+  /* 刘成铭 | 排行榜列表 */
+  .lcm_list {
+    margin-top: 20px;
+  }
+
+  .lcm_row {
+    display: grid;
+    grid-template-columns: 56px 460px 84px;
+    align-items: center;
+    height: 72px;
+    border-bottom: 1px dotted #bdbdbd;
+  }
+
+  .lcm_row:last-child {
+    border-bottom: 0;
+  }
+
+  .lcm_rank {
+    padding-left: 4px;
+    font-size: 24px;
+    color: #666666;
+  }
+
+  .lcm_rankTop {
+    color: #5e8fd1;
+  }
+
+  .lcm_title {
+    font-size: 24px;
+    color: #333333;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .lcm_views {
+    padding-right: 4px;
+    text-align: right;
+    font-size: 23px;
+    color: #c7002c;
+    white-space: nowrap;
+  }
+
+  /* 刘成铭 | “评论排行”空状态 */
+  .lcm_empty {
+    height: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999999;
+    font-size: 24px;
+    letter-spacing: 1px;
+  }
+
+  .lcm_isHidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+  <main class="lcm_page">
+    <div class="lcm_widget">
+      <div class="lcm_tabs" role="tablist" aria-label="排行榜切换">
+        <button
+          type="button"
+          class="lcm_tab lcm_tabActive"
+          id="lcm_tabClicks"
+          role="tab"
+          aria-selected="true"
+          aria-controls="lcm_panelClicks"
+        >点击排行</button>
+        <button
+          type="button"
+          class="lcm_tab"
+          id="lcm_tabComments"
+          role="tab"
+          aria-selected="false"
+          aria-controls="lcm_panelComments"
+        >评论排行</button>
+      </div>
+
+      <section id="lcm_panelClicks" role="tabpanel" aria-labelledby="lcm_tabClicks">
+        <div class="lcm_list">
+          <div class="lcm_row">
+            <div class="lcm_rank lcm_rankTop">1</div>
+            <div class="lcm_title">中国各城市房子还要卖多少年 (详细数据)</div>
+            <div class="lcm_views">187706</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank lcm_rankTop">2</div>
+            <div class="lcm_title">任志强：60多年来 我不知道国企给了我们</div>
+            <div class="lcm_views">171180</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank lcm_rankTop">3</div>
+            <div class="lcm_title">三精制药跳楼老总被查因华润商贿案 省食</div>
+            <div class="lcm_views">127631</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank">4</div>
+            <div class="lcm_title">内地17省铺开不动产统一登记职责整合工作</div>
+            <div class="lcm_views">113865</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank">5</div>
+            <div class="lcm_title">山西煤老板抛售整栋99套二手房 8年投资翻</div>
+            <div class="lcm_views">72770</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank">6</div>
+            <div class="lcm_title">北京城南楼市“沦陷” 变相降价措施加码</div>
+            <div class="lcm_views">62971</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank">7</div>
+            <div class="lcm_title">中国3d打印技术取得重大突破 近1200人连</div>
+            <div class="lcm_views">27456</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank">8</div>
+            <div class="lcm_title">重磅利空突至致全球暴跌 A股或黑周五无悬</div>
+            <div class="lcm_views">25322</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank">9</div>
+            <div class="lcm_title">七匹狼早盘上演奇葩一幕：单笔4手卖单刷</div>
+            <div class="lcm_views">20912</div>
+          </div>
+          <div class="lcm_row">
+            <div class="lcm_rank">10</div>
+            <div class="lcm_title">长油小股东主导股东大会 当场爆料董事长</div>
+            <div class="lcm_views">11667</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="lcm_panelComments" class="lcm_isHidden" role="tabpanel" aria-labelledby="lcm_tabComments">
+        <div class="lcm_empty">暂无评论排行数据</div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // 刘成铭 | 点击排行 / 评论排行标签切换
+    var lcm_tabClicks = document.getElementById('lcm_tabClicks');
+    var lcm_tabComments = document.getElementById('lcm_tabComments');
+    var lcm_panelClicks = document.getElementById('lcm_panelClicks');
+    var lcm_panelComments = document.getElementById('lcm_panelComments');
+
+    function lcm_setActiveTab(lcm_activeTab, lcm_activePanel, lcm_idleTab, lcm_idlePanel) {
+      lcm_activeTab.classList.add('lcm_tabActive');
+      lcm_activeTab.setAttribute('aria-selected', 'true');
+      lcm_idleTab.classList.remove('lcm_tabActive');
+      lcm_idleTab.setAttribute('aria-selected', 'false');
+
+      lcm_activePanel.classList.remove('lcm_isHidden');
+      lcm_idlePanel.classList.add('lcm_isHidden');
+    }
+
+    lcm_tabClicks.addEventListener('click', function () {
+      lcm_setActiveTab(lcm_tabClicks, lcm_panelClicks, lcm_tabComments, lcm_panelComments);
+    });
+
+    lcm_tabComments.addEventListener('click', function () {
+      lcm_setActiveTab(lcm_tabComments, lcm_panelComments, lcm_tabClicks, lcm_panelClicks);
+    });
+  </script>
+</body>
+</html>
